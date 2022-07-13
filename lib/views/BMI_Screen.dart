@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:bmiv2/views/Result_Screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,23 +13,24 @@ class _BMIScreenState extends State<BMIScreen> {
   final _formKey = GlobalKey<FormState>();
 
    double height = 120;
-
-  double weight=0;
-
+   double weight=0;
+   // ignore: prefer_typing_uninitialized_variables
+   var age;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController ageController  = TextEditingController();
   TextEditingController heightController = TextEditingController();
-
   TextEditingController weightController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[50],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             'BMI Calculator',
             style:
-            TextStyle(color: Colors.pink[600], fontWeight: FontWeight.bold),
+            TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
           ),
         ),
         backgroundColor: Colors.white,
@@ -39,17 +39,17 @@ class _BMIScreenState extends State<BMIScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            Padding(
+            const Padding(
               // Word BMI
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(15.0),
               child: Align(
                 alignment: Alignment.topRight,
                 child: Text(
                   'BMI',
-                  style: TextStyle(color: Colors.pink[200], fontSize: 25),
+                  style: TextStyle(color: Colors.blue, fontSize: 25),
                 ),
               ),
             ), // Word BMI
@@ -57,6 +57,44 @@ class _BMIScreenState extends State<BMIScreen> {
               key: _formKey,
               child: Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your Name';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                        border: OutlineInputBorder(
+                            borderSide: const BorderSide(width: 100),
+                            borderRadius: BorderRadius.circular(5)),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your Age';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      controller: ageController,
+                      decoration: InputDecoration(
+                        labelText: 'Age',
+                        border: OutlineInputBorder(
+                            borderSide: const BorderSide(width: 100),
+                            borderRadius: BorderRadius.circular(5)),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: TextFormField(
@@ -72,7 +110,7 @@ class _BMIScreenState extends State<BMIScreen> {
                         hintText: 'Enter in form of CM',
                         labelText: 'Height',
                         border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 100),
+                            borderSide: const BorderSide(width: 100),
                             borderRadius: BorderRadius.circular(5)),
                       ),
                     ),
@@ -93,7 +131,7 @@ class _BMIScreenState extends State<BMIScreen> {
                         hintText: 'Enter in form of KG',
                         labelText: 'Weight',
                         border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 100),
+                            borderSide: const BorderSide(width: 100),
                             borderRadius: BorderRadius.circular(5)),
                       ),
                     ),
@@ -119,13 +157,15 @@ class _BMIScreenState extends State<BMIScreen> {
                                 result: result.round(),
                                 height: height.roundToDouble(),
                                 wieght: weight,
+                                name:  nameController.text,
+                                age: ageController.text,
                               ),
                             ),
                           );
                         },
                         child: const Text(
                           'Calculate!',
-                          style: TextStyle(color: Colors.pink, fontSize: 27),
+                          style: TextStyle(color: Colors.blue, fontSize: 27),
                         ),
                       ),
                     ),
